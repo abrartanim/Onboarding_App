@@ -29,11 +29,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: AppColors.backgroundColor,
+        scaffoldBackgroundColor: Colors.transparent,
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.primaryColor,
           brightness: Brightness.dark,
-          surface: AppColors.backgroundColor,
+          surface: Colors.transparent,
         ),
 
 

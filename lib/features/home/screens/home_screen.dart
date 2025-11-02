@@ -78,81 +78,85 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Selected Location'),
+    return Container(
+      decoration: AppColors.gradientDecoration,
+      child: Scaffold(
         backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Location Box
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(12),
+        appBar: AppBar(
+          title: const Text('Selected Location'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Location Box
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.location_on_outlined, color: AppColors.white),
+                    const SizedBox(width: 12),
+                    Text(
+                      widget.selectedLocation ?? 'Add your location',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: Row(
-                children: [
-                  const Icon(Icons.location_on_outlined, color: AppColors.white),
-                  const SizedBox(width: 12),
-                  Text(
-                    widget.selectedLocation ?? 'Add your location',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.white,
+              const SizedBox(height: 24),
+
+              // "Alarms" Title
+              Text(
+                'Alarms',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Alarm List
+              Expanded(
+                child: _alarms.isEmpty
+                    ? Center(
+                  child: Text(
+                    'No alarms set.\nPress the + button to add one!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.white.withOpacity(0.7),
+                      fontSize: 16,
                     ),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            // "Alarms" Title
-            Text(
-              'Alarms',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: AppColors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Alarm List
-            Expanded(
-              child: _alarms.isEmpty
-                  ? Center(
-                child: Text(
-                  'No alarms set.\nPress the + button to add one!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.white.withOpacity(0.7),
-                    fontSize: 16,
-                  ),
+                )
+                    : ListView.builder(
+                  itemCount: _alarms.length,
+                  itemBuilder: (context, index) {
+                    final alarm = _alarms[index];
+                    return AlarmListItem(
+                      alarm: alarm,
+                      onToggle: (isActive) => _onAlarmToggle(alarm, isActive),
+                    );
+                  },
                 ),
-              )
-                  : ListView.builder(
-                itemCount: _alarms.length,
-                itemBuilder: (context, index) {
-                  final alarm = _alarms[index];
-                  return AlarmListItem(
-                    alarm: alarm,
-                    onToggle: (isActive) => _onAlarmToggle(alarm, isActive),
-                  );
-                },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _setAlarm,
-        backgroundColor: AppColors.primaryColor,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add, color: AppColors.white, size: 30),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _setAlarm,
+          backgroundColor: AppColors.primaryColor,
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add, color: AppColors.white, size: 30),
+        ),
       ),
     );
   }
