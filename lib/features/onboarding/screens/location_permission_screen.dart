@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:softvence_project/common_widgets/page_transition.dart';
 import 'package:softvence_project/constants/app_assets.dart';
 import 'package:softvence_project/constants/app_colors.dart';
 import 'package:softvence_project/features/home/screens/home_screen.dart';
@@ -52,8 +53,8 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
     if (!mounted) return;
 
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const HomeScreen(
+      SlidePageRoute(
+        page: const HomeScreen(
           selectedLocation: "Your Current Location",
         ),
       ),
@@ -62,9 +63,8 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
 
   void _goToHome() {
     Navigator.of(context).push(
-      MaterialPageRoute(
-        // Go to home but without a location selected
-        builder: (context) => const HomeScreen(selectedLocation: null),
+      SlidePageRoute(
+        page: const HomeScreen(selectedLocation: null),
       ),
     );
   }
@@ -76,7 +76,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
         decoration: AppColors.gradientDecoration,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 70.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,7 +87,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                       'Welcome! Your Smart Travel Alarm',
                       textAlign: TextAlign.center,
                       style:
-                      Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      Theme.of(context).textTheme.headlineLarge?.copyWith(
                         color: AppColors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -96,17 +96,19 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                     Text(
                       'Stay on schedule and enjoy every moment of your journey.',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppColors.white.withOpacity(0.8),
                       ),
                     ),
                   ],
                 ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16.0),
-                  child: Image.asset(
-                    AppAssets.img1,
-                    fit: BoxFit.cover,
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16.0),
+                    child: Image.asset(
+                      AppAssets.img1,
+                      fit: BoxFit.contain, // Ensure the full image is shown
+                    ),
                   ),
                 ),
                 Column(
@@ -120,20 +122,21 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                         onPressed: _requestLocationPermission,
                         style: OutlinedButton.styleFrom(
                           foregroundColor: AppColors.white,
-                          side: const BorderSide(
-                            color: AppColors.primaryColor,
+                          side:  BorderSide(
+                            color: AppColors.white.withValues(alpha: 0.36),
                             width: 2,
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                           padding:
-                          const EdgeInsets.symmetric(vertical: 16),
+                          const EdgeInsets.symmetric(vertical: 20),
                         ),
+                        iconAlignment: IconAlignment.end,
                         label: const Text(
                           'Use Current Location',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -144,15 +147,15 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                         onPressed: _goToHome,
                         style: FilledButton.styleFrom(
                           backgroundColor: AppColors.primaryColor,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: 20),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(30),
                           ),
                         ),
                         child: const Text(
                           'Home',
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: AppColors.white),
                         ),

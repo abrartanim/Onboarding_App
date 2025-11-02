@@ -6,6 +6,7 @@ import 'package:softvence_project/constants/app_assets.dart';
 import 'package:softvence_project/constants/app_colors.dart';
 import 'package:softvence_project/features/onboarding/models/onboarding_model.dart';
 import 'package:softvence_project/features/onboarding/widgets/onboarding_page_widget.dart';
+import 'package:softvence_project/common_widgets/page_transition.dart';
 import 'package:softvence_project/features/onboarding/screens/location_permission_screen.dart';
 
 
@@ -41,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       videoPath: AppAssets.video3,
       title: 'See the beauty, one journey at a time.',
       subtitle:
-      'Travel made simple and exciting—discover places you\'ll love and moments you\'ll never forget.',
+      'Travel made simple and exciting—discover places you’ll love and moments you’ll never forget.',
     ),
   ];
 
@@ -155,15 +156,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _goToNextScreen() {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const LocationPermissionScreen(),
-      ),
+      FadePageRoute(page: const LocationPermissionScreen()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    const figmaVideoHeight = 429.0;
+    final screenHeight = MediaQuery.of(context).size.height;
     const figmaBorderRadius = 32.0;
 
     return Scaffold(
@@ -173,7 +172,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           // --- Video Player Section ---
           SizedBox(
-            height: figmaVideoHeight,
+            height: screenHeight * 0.55, // Responsive height
             child: Stack(
               children: [
                 // Video Player or Loading/Error State
@@ -340,11 +339,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 vertical: 8,
               ),
             ),
-            child: const Text(
+            child: Text(
               'Skip',
-              style: TextStyle(
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: AppColors.white,
-                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -355,8 +353,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _buildBottomNavigation() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Padding(
-      padding: const EdgeInsets.only(left: 32, right: 32, bottom: 40),
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.08, // 8% of screen width
+      ).copyWith(
+        bottom: (screenHeight * 0.05).clamp(24.0, 50.0), // Responsive bottom padding
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -388,11 +393,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 _currentPage == _onboardingPages.length - 1
                     ? 'Get Started'
                     : 'Next',
-                style: const TextStyle(
-                  fontSize: 16,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppColors.white,
-
                 ),
               ),
             ),

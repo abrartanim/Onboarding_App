@@ -88,7 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.04,
+            vertical: 16.0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -131,9 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     'No alarms set.\nPress the + button to add one!',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: AppColors.white.withOpacity(0.7),
-                      fontSize: 16,
                     ),
                   ),
                 )

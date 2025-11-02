@@ -7,13 +7,15 @@ class OnboardingPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Padding(
-      // 1. --- CHANGE ---
-      // Added vertical padding (e.g., 24.0) to give it space.
-      // Horizontal padding is 16.0 from your Figma reference.
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.05,
+        vertical: screenHeight * 0.03,
+      ),
       child: Column(
-        // Text is aligned to the top of its available space.
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
