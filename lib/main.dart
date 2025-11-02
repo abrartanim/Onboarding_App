@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:softvence_project/constants/app_colors.dart';
 import 'package:softvence_project/features/onboarding/screens/onboarding_screen.dart';
+import 'package:softvence_project/helpers/notification_helper.dart'; // Import this
 import 'package:google_fonts/google_fonts.dart';
+// Create a global instance
+final NotificationHelper notificationHelper = NotificationHelper();
 
+Future<void> main() async {
+  // Ensure Flutter is initialized
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
+  // Initialize notifications
+  await notificationHelper.init();
+
+  // Request iOS permissions (this will only pop up on first launch on iOS)
+  await notificationHelper.requestIOSPermissions();
+
   runApp(const MyApp());
 }
 
@@ -22,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.primaryColor,
           brightness: Brightness.dark,
-          background: AppColors.backgroundColor,
+          surface: AppColors.backgroundColor,
         ),
 
 
