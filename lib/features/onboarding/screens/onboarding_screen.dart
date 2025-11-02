@@ -5,6 +5,7 @@ import 'package:softvence_project/constants/app_assets.dart';
 import 'package:softvence_project/constants/app_colors.dart';
 import 'package:softvence_project/features/onboarding/models/onboarding_model.dart';
 import 'package:softvence_project/features/onboarding/widgets/onboarding_page_widget.dart';
+import 'package:softvence_project/features/onboarding/screens/location_permission_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -14,7 +15,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  // --- NO CHANGES to state variables or init/dispose methods ---
+
   final PageController _pageController = PageController();
   int _currentPage = 0;
   VideoPlayerController? _videoController;
@@ -89,17 +90,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _goToNextScreen() {
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const Scaffold(
-          body: Center(
-            child: Text('Location Permission Screen'),
-          ),
-        ),
+
+        builder: (context) => const LocationPermissionScreen(),
       ),
     );
   }
-  // --- END of unchanged methods ---
+
 
   @override
   Widget build(BuildContext context) {
@@ -108,15 +106,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      // 1. --- CHANGE ---
-      // The body is now a Column for a top-to-bottom layout.
+
       body: Column(
         children: [
           // --- ITEM 1: Video Player Section (as a Stack) ---
           SizedBox(
             height: figmaVideoHeight,
-            // We still use a Stack here to overlay the skip button and gradient
-            // *on top of the video*.
+
             child: Stack(
               children: [
                 if (_videoController != null &&
@@ -188,10 +184,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
 
-          // --- ITEM 2: Text Section (Expanded PageView) ---
-          // 2. --- CHANGE ---
-          // This Expanded widget makes the PageView fill all
-          // remaining space between the video and the bottom controls.
+
           Expanded(
             child: PageView.builder(
               controller: _pageController,
@@ -202,10 +195,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
 
-          // --- ITEM 3: Bottom Controls ---
-          // 3. --- CHANGE ---
-          // The controls are now the last item in the Column,
-          // ensuring they are always at the bottom.
+
           Padding(
             padding: const EdgeInsets.only(left: 32, right: 32, bottom: 40),
             child: Column(

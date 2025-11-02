@@ -25,18 +25,18 @@ class MyApp extends StatelessWidget {
           background: AppColors.backgroundColor,
         ),
 
-        // ✅ Apply Oxygen font to the entire text theme
+
         textTheme: GoogleFonts.oxygenTextTheme(
           Theme.of(context).textTheme.copyWith(
             headlineLarge: const TextStyle(
-              fontSize: 32,           // title font size
+              fontSize: 32,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
             bodyMedium: const TextStyle(
-              fontSize: 22,           // subtitle font size
-              color: Colors.white70,  // semi-transparent white
-              height: 1.5,            // line spacing
+              fontSize: 22,
+              color: Colors.white70,
+              height: 1.5,
             ),
           ),
         ),
